@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Información del Curso</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-WuBnHx2OZU8rMmRo2BbU/gR7DBrM/AcS9oKJt6HgyKslA24TZM6h1N7M4DqCgCU1nM3tBEtfz9HgXtBoege0Cg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #9f88f0;
+    }
+    
+    .curso-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-image: url('https://i.pinimg.com/736x/0b/14/50/0b1450793c30613c883c902b41acf351.jpg');
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .curso-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .curso-info {
+      margin-top: 20px;
+    }
+
+    .register-button {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .register-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de Navegación -->
+  <div id="navbar-container"></div>
+
+  <!-- Contenido específico de cursos.html -->
+  <div class="curso-container">
+    <img id="curso-image" src="" alt="Imagen del curso">
+    <div class="curso-info">
+      <h2 id="curso-title">Título del Curso</h2>
+      <p id="curso-description">Descripción del curso</p>
+      <p id="curso-objective-general">Objetivo General:</p>
+      <p id="curso-objective-specific">Objetivos Específicos:</p>
+      <p id="curso-requirements">Requisitos:</p>
+      <p id="curso-duration">Duración:</p>
+      <p id="curso-value">Valor:</p>
+    </div>
+    <a href="valid.html" class="register-button">Registrarme</a>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts al final del body -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>
+  <script src="include.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Obtener el ID del curso desde los parámetros de la URL
+      const params = new URLSearchParams(window.location.search);
+      const cursoId = params.get('cursoId');
+
+      if (cursoId) {
+        // Consultar Firebase para obtener detalles del curso según su ID
+        const cursoUrl = `https://cursos-74fa1-default-rtdb.firebaseio.com/cursos/${cursoId}.json`;
+
+        fetch(cursoUrl)
+          .then(response => response.json())
+          .then(curso => {
+            // Llenar la página con la información del curso
+            document.getElementById('curso-title').textContent = curso && curso.nombredelcurso ? curso.nombredelcurso : '';
+            document.getElementById('curso-description').textContent = curso && curso.descripcion ? curso.descripcion : '';
+            document.getElementById('curso-objective-general').textContent += curso && curso.objetivogeneral ? curso.objetivogeneral : '';
+            document.getElementById('curso-objective-specific').textContent += curso && curso.objetivoespecifico ? curso.objetivoespecifico : '';
+            document.getElementById('curso-requirements').textContent += curso && curso.Requisitos ? curso.Requisitos : '';
+            document.getElementById('curso-duration').textContent += curso && curso.duracion ? curso.duracion : '';
+            document.getElementById('curso-value').textContent += curso && curso.valor ? curso.valor : '';
+
+            // Configurar la imagen del curso si está disponible
+            if (curso && curso.imagen) {
+              document.getElementById('curso-image').style.display = 'block';
+              document.getElementById('curso-image').src = curso.imagen;
+              document.getElementById('curso-image').alt = curso.nombredelcurso;
+            } else {
+              document.getElementById('curso-image').style.display = 'none';
+            }
+          })
+          .catch(error => console.error('Error al cargar los detalles del curso:', error));
+      }
+    });
+  </script>
+</body>
+</html>

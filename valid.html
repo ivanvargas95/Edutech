@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Registro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://www.dhatriinfo.com/assets/images/slider-1.jpg'); /* Cambia 'URL_DE_TU_FONDO' por la URL de la imagen de fondo */
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-image: url('https://radiolalechuza.com.ar/wp-content/uploads/2020/12/millones-mexicanos-acceso-computadora-universo-930x596.jpg'); /* Cambia 'URL_DE_TU_FONDO_DEL_CONTAINER' por la URL de la imagen de fondo del contenedor */
+      background-size: cover;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 2px solid white; /* Borde blanco para el contenedor */
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      color: rgb(36, 2, 99); /* Color del texto */
+    }
+    label, input, select {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      color:white;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 5px;
+      background-color:rgba(90, 3, 161, 0.829) ;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Formulario de Registro</h1>
+    <form id="registroForm">
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" required>
+      <input type="submit" value="Verificar DNI">
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registroForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var dniInput = document.getElementById("dni").value;
+      console.log("DNI ingresado:", dniInput);
+      var url = "https://registro-3e4b9-default-rtdb.firebaseio.com/registro.json";
+
+      fetch(url)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log("Datos de la API:", data);
+          var dniExiste = false;
+          for (var key in data) {
+            if (data.hasOwnProperty(key) && data[key].dni === dniInput) {
+              dniExiste = true;
+              break;
+            }
+          }
+
+          if (dniExiste) {
+            alert("El número de DNI ya existe en un registro.");
+            window.location.href = "login.html";
+          } else {
+            document.getElementById("registroForm").innerHTML = `
+              <label for="nombreyapellido">Nombre y Apellido:</label>
+              <input type="text" id="nombreyapellido" required>
+              <label for="mail">Email:</label>
+              <input type="email" id="mail" required>
+              <label for="curso">Curso:</label>
+              <select id="curso" required>
+                <option value="Front End Developer">Front End Developer</option>
+                <option value="Java Developer">Java Developer</option>
+                <option value="PHP Developer">PHP Developer</option>
+                <option value="Python Developer">Python Developer</option>
+              </select>
+              <label for="contrasenia">Contraseña:</label>
+              <input type="password" id="contrasenia" required>
+              <input type="submit" value="Registrar">
+            `;
+
+            document.getElementById("registroForm").addEventListener("submit", function(event) {
+              event.preventDefault();
+
+              var datos = {
+                dni: dniInput,
+                nombreyapellido: document.getElementById("nombreyapellido").value,
+                mail: document.getElementById("mail").value,
+                curso: document.getElementById("curso").value,
+                contrasenia: document.getElementById("contrasenia").value
+              };
+
+              console.log("Datos a registrar:", datos);
+
+              fetch(url, {
+                method: "POST",
+                body: JSON.stringify(datos)
+              })
+              .then(function(response) {
+                alert("Registro exitoso!");
+                document.getElementById("registroForm").reset();
+                window.location.href = "login.html";
+              })
+              .catch(function(error) {
+                alert("Ha ocurrido un error. Por favor, intenta nuevamente.");
+                console.error(error);
+              });
+            });
+          }
+        })
+        .catch(function(error) {
+          alert("Ha ocurrido un error. Por favor, intenta nuevamente.");
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+</html>

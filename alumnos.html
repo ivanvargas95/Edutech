@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alumnos</title>
+  <style>
+    /* Estilos básicos */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-image: url('https://e0.pxfuel.com/wallpapers/647/845/desktop-wallpaper-top-10-education-tech-blogs-education-technology.jpg'); /* Cambia 'URL_DE_TU_FONDO' por la URL de la imagen de fondo */
+      background-size: cover;
+      margin: 0;
+      color: white; /* Color del texto */
+    }
+    .welcome {
+      margin-bottom: 20px;
+      font-size: 34px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+      color:rgb(99, 2, 145)
+    }
+    .container {
+      background-image: url('https://img.freepik.com/vector-premium/tecnologia-educativa-linea-escritorio_25030-43251.jpg'); /* Cambia 'URL_DE_TU_FONDO_DEL_CONTAINER' por la URL de la imagen de fondo del contenedor */
+      background-size: cover;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 2px solid white; /* Borde blanco para el contenedor */
+      width: 80%;
+      max-width: 450px;
+      text-align: center;
+    }
+    .profile-info {
+      margin-top: 20px;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+  background-image: url('https://img.freepik.com/vector-premium/tecnologia-educativa-linea-escritorio_25030-43251.jpg');
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome" id="bienvenido"></div>
+  <div class="container" id="cursoContainer">
+    <!-- Aquí se mostrarán los datos del curso -->
+  </div>
+
+  <!-- Botón de perfil -->
+  <button id="perfilButton">Ver perfil</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener el ID del registro desde la URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var registroId = urlParams.get("id");
+
+      // Obtener los datos del registro desde la API
+      var registroUrl = "https://registro-3e4b9-default-rtdb.firebaseio.com/registro/" + registroId + ".json";
+      fetch(registroUrl)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          // Obtener el nombre y apellido del registro
+          var nombreyapellido = data.nombreyapellido;
+
+          // Mostrar el mensaje de bienvenida
+          document.getElementById("bienvenido").textContent = "Bienvenido " + nombreyapellido;
+
+          // Obtener el curso del registro
+          var curso = data.curso;
+
+          // Obtener los datos del curso desde la API
+          var cursosUrl = "https://cursos-74fa1-default-rtdb.firebaseio.com/cursos.json";
+          fetch(cursosUrl)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(cursosData) {
+              // Buscar el curso que coincida con el nombre del curso del registro
+              for (var key in cursosData) {
+                if (cursosData.hasOwnProperty(key) && cursosData[key].nombredelcurso === curso) {
+                  var cursoEncontrado = cursosData[key];
+                  // Mostrar los datos del curso
+                  mostrarDatosCurso(cursoEncontrado);
+                  break;
+                }
+              }
+            })
+            .catch(function(error) {
+              console.error(error);
+            });
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+
+      function mostrarDatosCurso(curso) {
+        var cursoContainer = document.getElementById("cursoContainer");
+        cursoContainer.innerHTML = `
+          <img src="${curso.imagen}" alt="${curso.nombredelcurso}">
+          <div class="profile-info">
+            <h2>${curso.nombredelcurso}</h2>
+            <p><strong>Objetivo General:</strong> ${curso.objetivogeneral}</p>
+            <p><strong>Objetivo Específico:</strong> ${curso.objetivoespecifico}</p>
+          </div>
+        `;
+      }
+
+      // Generar la URL de profile.html con el ID del registro
+      var perfilUrl = "profile.html?id=" + registroId;
+
+      // Obtener el botón de perfil y agregar el evento click
+      var perfilButton = document.getElementById("perfilButton");
+      perfilButton.addEventListener("click", function() {
+        // Abrir "profile.html" en una ventana flotante
+        window.open(perfilUrl, "_blank", "width=600,height=400");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    /* Estilos básicos */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://img.freepik.com/vector-gratis/fondo-particulas-tecnologia-estilo-realista_23-2148426704.jpg'); /* Cambia 'URL_DE_TU_FONDO' por la URL de la imagen de fondo */
+      background-size: cover;
+      margin: 0;
+    }
+    .container {
+      background-image: url('data:image/jpeg;base64,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'); /* Cambia 'URL_DE_TU_FONDO_DEL_CONTAINER' por la URL de la imagen de fondo del contenedor */
+      background-size: cover;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+    }
+    label, input {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+      color: black; 
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background-color: #286892;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: rgb(18, 105, 145);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" required>
+      <label for="contrasenia">Contraseña:</label>
+      <input type="password" id="contrasenia" required>
+      <input type="submit" value="Iniciar Sesión">
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Evitar que se envíe el formulario automáticamente
+
+      var dniInput = document.getElementById("dni").value;
+      var contraseniaInput = document.getElementById("contrasenia").value;
+      var url = "https://registro-3e4b9-default-rtdb.firebaseio.com/registro.json";
+
+      // Realizar la petición GET a la API para obtener los registros
+      fetch(url)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var registroEncontrado = false;
+          var registroId;
+
+          // Buscar el registro que coincida con el DNI y la contraseña ingresados
+          for (var key in data) {
+            if (data.hasOwnProperty(key) && data[key].dni === dniInput && data[key].contrasenia === contraseniaInput) {
+              registroEncontrado = true;
+              registroId = key;
+              break;
+            }
+          }
+
+          if (registroEncontrado) {
+            // Redirigir a alumnos.html con el ID del registro como parámetro en la URL
+            window.location.href = "alumnos.html?id=" + encodeURIComponent(registroId);
+          } else {
+            alert("Credenciales inválidas. Por favor, intenta nuevamente.");
+          }
+        })
+        .catch(function(error) {
+          alert("Ha ocurrido un error. Por favor, intenta nuevamente.");
+          console.error(error);
+        });
+    });
+  </script>
+</body>
+</html>
