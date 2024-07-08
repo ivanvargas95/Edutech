@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Edutech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-WuBnHx2OZU8rMmRo2BbU/gR7DBrM/AcS9oKJt6HgyKslA24TZM6h1N7M4DqCgCU1nM3tBEtfz9HgXtBoege0Cg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #054744;
+    }
+    .content-container h2{
+        color: white;
+    }
+
+    .content-container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 20px;
+      background-color: #6f7c8a;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .contact-header img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #928c8c;
+      border-radius: 5px;
+    }
+
+    .contact-form button {
+      padding: 10px;
+      border: none;
+      background-color: #333;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  
+  <div class="content-container">
+    <div class="contact-header">
+      <img src="https://belleza-estetica.com.ar/wp-content/uploads/2024/01/como_encontrar_las_mejores_formas_de_contacto_de_las_empresas_50780_orig.jpg" alt="Contacto"style="height: 25rem;width: 40rem; margin-right: 10px;">
+      <h2>Contáctanos</h2>
+    </div>
+    <form class="contact-form" action="contact_process.php" method="post">
+      <input type="text" name="name" placeholder="Nombre Completo" required>
+      <input type="email" name="email" placeholder="Correo Electrónico" required>
+      <input type="tel" name="phone" placeholder="Teléfono" required>
+      <input type="text" name="website" placeholder="Sitio Web">
+      <input type="text" name="subject" placeholder="Asunto" required>
+      <textarea name="message" rows="5" placeholder="Mensaje" required></textarea>
+      <label for="course">Curso de Interés:</label>
+      <select name="course" id="course" required>
+        <option value="">Selecciona un curso</option>
+        <option value="frontend">Front End Developer</option>
+        <option value="java">Java Developer</option>
+        <option value="python">Python Developer</option>
+        <option value="php">PHP Developer</option>
+      </select>
+
+      <label for="preferred-contact">Método de Contacto Preferido:</label>
+      <select name="preferred-contact" id="preferred-contact" required>
+        <option value="">Selecciona un método de contacto</option>
+        <option value="email">Correo Electrónico</option>
+        <option value="phone">Teléfono</option>
+      </select>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+ 
+  <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>
+  <script src="include.js"></script>
+</body>
+</html>

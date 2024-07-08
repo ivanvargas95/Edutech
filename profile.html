@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perfil</title>
+  <style>
+    /* Estilos básicos */
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFQF4pBvsYw6HfH93045O_oepZQrCDIGOM_fHRzRRSnX1GNq_RQXsT6rcO9-Z1aJE7PeDlJis0eTIcCrpk9bDayOXndI_rWzAfcig96Jo_ALYQzORz4FV91Y8xlo5Gh8M14qGx/s1600/fundamprog003.png'); /* Cambia 'URL_DE_TU_FONDO' por la URL de la imagen de fondo */
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white; /* Color del texto */
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 44px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+    .container {
+      background-image: url('https://larepublica.es/wp-content/uploads/2018/07/tiendas-virtuales.png'); /* Cambia 'URL_DE_TU_FONDO_DEL_CONTAINER' por la URL de la imagen de fondo del contenedor */
+      background-size: cover;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 2px solid white; /* Borde blanco para el contenedor */
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      color: black; /* Color del texto dentro de la tabla */
+    }
+  </style>
+</head>
+<body>
+  <h1>Registro</h1>
+  <div class="container">
+    <table>
+      <tr>
+        <th>DNI:</th>
+        <td id="dni"></td>
+      </tr>
+      <tr>
+        <th>Nombre y Apellido:</th>
+        <td id="nombreyapellido"></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td id="mail"></td>
+      </tr>
+      <tr>
+        <th>Curso:</th>
+        <td id="curso"></td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    // Obtener el ID del registro desde la URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var registroId = urlParams.get("id");
+
+    // Obtener los datos del registro desde la API
+    var registroUrl = "https://registro-3e4b9-default-rtdb.firebaseio.com/registro/" + registroId + ".json";
+    console.log("Fetching data from:", registroUrl); // Agregado para depuración
+    fetch(registroUrl)
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        console.log("Data received:", data); // Agregado para depuración
+        document.getElementById("dni").innerText = data.dni;
+        document.getElementById("nombreyapellido").innerText = data.nombreyapellido;
+        document.getElementById("mail").innerText = data.mail;
+        document.getElementById("curso").innerText = data.curso;
+      })
+      .catch(function(error) {
+        console.error("Error fetching data:", error); // Agregado para depuración
+      });
+  </script>
+</body>
+</html>
